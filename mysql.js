@@ -5,7 +5,7 @@ var http = require('http'),
 	connection = mysql.createConnection({
 		host     : 'localhost',
 		user     : 'root',
-		password : 'sandals',
+		password : 'Jarvis10',
 	});
 
 if(cluster.isMaster) {
@@ -20,7 +20,7 @@ if(cluster.isMaster) {
 } else {
 	var server = http.createServer(function(req, res) {
 		var body = '';
-		connection.query('SELECT * FROM classicmodels.customers', function(err, rows) {
+		connection.query('SELECT * FROM sql542838.customers', function(err, rows) {
 			if(err) console.log(err);
 
 			body+= '<table><tr>';
