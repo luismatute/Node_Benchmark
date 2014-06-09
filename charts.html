@@ -1,0 +1,105 @@
+<html>
+  <head>
+	<!--Load the AJAX API-->
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		var charts_data = {
+			'10c': [
+					{
+						type: 'hello',
+						cf: 68.23,
+						node: 68.06
+					},
+					{
+						type: 'loop',
+						cf: 51.74,
+						node: 64.79
+					},
+					{
+						type: 'json',
+						cf: 58.18,
+						node: 63.84
+					},
+					{
+						type: 'mysql',
+						cf: 43.43,
+						node: 43.60
+					}
+				],
+			'50c': [{
+						type: 'mysql',
+						cf: 155.34,
+						node: 162.71
+					}],
+			'100c': [
+					{
+						type: 'hello',
+						cf: 583.59,
+						node: 660.49
+					},
+					{
+						type: 'loop',
+						cf: 276.94,
+						node: 551
+					},
+					{
+						type: 'json',
+						cf: 516.76,
+						node: 650.04
+					},
+					{
+						type: 'mysql',
+						cf: 179.18,
+						node: 270.71
+					}
+			]
+		};
+
+		google.load("visualization", "1", {packages:["corechart"]});
+		google.setOnLoadCallback(loadCharts);
+
+		function loadCharts() {
+			for (var key in charts_data) {
+				charts_data[key].map(function(element){
+					draw_chart(element.type,element.cf,element.node,key);
+				});
+			}
+		}
+
+		function draw_chart (test,cf,node,concurrency) {
+			var data = google.visualization.arrayToDataTable([
+					['WebServer', 'Coldfusion', 'NodeJS'],
+					[test, cf, node]
+				]);
+
+			var options = {
+				width: '100%',
+				title: '1000 Conections, '+concurrency+' Concurrent'
+			};
+
+			var chart = new google.visualization.BarChart(document.getElementById(test+'-'+concurrency));
+				chart.draw(data, options);
+		}
+
+		$(window).resize(function(){
+			loadCharts();
+		});
+	</script>
+  </head>
+
+  <body>
+	<!--Div that will hold the pie chart-->
+	<div id="hello-10c"></div>
+	<div id="loop-10c"></div>
+	<div id="json-10c"></div>
+	<div id="mysql-10c"></div>
+
+	<div id="mysql-50c"></div>
+
+	<div id="hello-100c"></div>
+	<div id="loop-100c"></div>
+	<div id="json-100c"></div>
+	<div id="mysql-100c"></div>
+  </body>
+</html>
